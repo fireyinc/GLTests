@@ -24,7 +24,7 @@ struct DirectionLight {
 	vec3 direction;
 	
 	vec3 ambient;
-	vec3 diffusion;
+	vec3 diffuse;
 	vec3 specular;
 };
 

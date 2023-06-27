@@ -21,7 +21,7 @@ float vpheight = 600.0f;
 float vpwidth = 800.0f;
 
 glm::vec3 globalUp(0.0f, 1.0f, 0.0f);
-glm::vec3 lightPosition(1.2f, 1.0f, 2.0f);
+glm::vec3 lightPosition(0.0f, 0.0f, 0.0f);
 
 //start camera stuff
 
@@ -218,19 +218,7 @@ int main() {
 		-0.5f,  0.5f, -0.5f,  	0.0f, 1.0f,		0.0f,  1.0f,  0.0f,
 	};
 
-	glm::vec3 amigapositions[] = {
-		glm::vec3(0.0f, 0.0f, 0.0f),
-		glm::vec3(0.0f, -3.0f, -3.0f),		
-		glm::vec3(0.0f, 3.0f, -3.0f),
-		glm::vec3(3.0f, 0.0f, -3.0f),	
-		glm::vec3(-3.0f, 0.0f, -3.0f),
 
-		glm::vec3(0.0f, 3.0f, 3.0f),	
-		glm::vec3(0.0f, -3.0f, 3.0f),
-		glm::vec3(3.0f, 0.0f, 3.0f),	
-		glm::vec3(-3.0f, 0.0f, 3.0f),
-	
-	};
 
 	//objects
 	unsigned int VBO; //vertex buffer object
@@ -395,9 +383,25 @@ int main() {
 	float speclight = 32.0f;
 	float brightness = 0.5f;
 
+	
 
 	while (!glfwWindowShouldClose(window)) {
 
+		float rad = 2 * sin((float)glfwGetTime()) + 5;
+
+		glm::vec3 amigapositions[] = {
+			glm::vec3(rad*sin((float)glfwGetTime()), 0.0f, rad*cos((float)glfwGetTime())),
+			glm::vec3(rad*sin((float)glfwGetTime()+4), 0.0f, rad*cos((float)glfwGetTime()+4)),
+			glm::vec3(rad*sin((float)glfwGetTime()+8), 0.0f, rad*cos((float)glfwGetTime()+8)),
+			glm::vec3(rad*sin((float)glfwGetTime()+12), 0.0f, rad*cos((float)glfwGetTime()+12)),
+			glm::vec3(rad*sin((float)glfwGetTime()+16), 0.0f, rad*cos((float)glfwGetTime()+16)),
+			glm::vec3(rad*sin((float)glfwGetTime()+20), 0.0f, rad*cos((float)glfwGetTime()+20)),
+			glm::vec3(rad*sin((float)glfwGetTime()+24), 0.0f, rad*cos((float)glfwGetTime()+24)),
+			glm::vec3(rad*sin((float)glfwGetTime()+28), 0.0f, rad*cos((float)glfwGetTime()+28)),
+			glm::vec3(rad*sin((float)glfwGetTime()+32), 0.0f, rad*cos((float)glfwGetTime()+32)),
+			glm::vec3(rad*sin((float)glfwGetTime()+36), 0.0f, rad*cos((float)glfwGetTime()+36)),
+			glm::vec3(rad*sin((float)glfwGetTime()+40), 0.0f, rad*cos((float)glfwGetTime()+40)),
+		};
 
 
 		closeWindowHotkey(window);
@@ -500,7 +504,12 @@ int main() {
 
 
 		//setting light struct
-		shader.setVec3("light.position", lightPosition);
+
+		
+		//shader.setVec3("light.position", lightPosition);
+
+		shader.setVec3("light.direction", glm::vec3(0.0f, -1.0f, 0.0f));
+
 		shader.setVec3("light.ambient", glm::vec3(brightness/6)*lightcolor);
 		shader.setVec3("light.diffuse", glm::vec3(brightness)*lightcolor);
 		shader.setVec3("light.specular", glm::vec3(1.0f)*lightcolor);
@@ -512,7 +521,8 @@ int main() {
 		glUniformMatrix4fv(glGetUniformLocation(shader.getID(), "view"), 1, GL_FALSE, glm::value_ptr(view));
 
 
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < 11; i++) {
+			
 			//transformations
 			glm::mat4 model = glm::mat4(1.0f);
 			model = glm::translate(model, amigapositions[i]);
@@ -546,8 +556,6 @@ int main() {
 
 
 
-
-		lightPosition = glm::vec3(2.0f, 2.0f, 2.0f);
 
 		//set transformations
 		lightmodel = glm::translate(lightmodel, lightPosition);
