@@ -2,22 +2,22 @@
     "tasks": [
         {
             "type": "cppbuild",
-            "label": "C/C++: g++.exe build active file",
-            "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
+            "label": "C/C++: g++ build active file",
+            "command": "g++",
             "args": [
                 "-g",
                 "-std=c++20",
                 "-I${workspaceFolder}/include",
                 "-L${workspaceFolder}/lib",
-                "${workspaceFolder}/src/\\*.cpp",
-                "${workspaceFolder}/src/libraries/\\*.cpp",
-                "${workspaceFolder}/src/libraries/imgui/\\*.cpp",
+                "${workspaceFolder}/src/*.cpp",
+                "${workspaceFolder}/src/libraries/*.cpp",
+                "${workspaceFolder}/src/libraries/imgui/*.cpp",
                 "${workspaceFolder}/src/libraries/glad.c",
                 "${workspaceFolder}/include/glad/glad.h",
 
-                "-lglfw3dll",
+                "-lglfw",
                 "-o",
-                "${workspaceFolder}/myprogram.exe"
+                "${workspaceFolder}/src/app.prg"
             ],
             "options": {
                 "cwd": "${fileDirname}"

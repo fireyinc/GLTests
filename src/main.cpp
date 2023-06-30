@@ -382,6 +382,9 @@ int main() {
 	glm::vec3 cubecolor(0.0f, 0.0f, 0.0f);
 	float speclight = 32.0f;
 	float brightness = 0.5f;
+	float coneangle = 15.0f;
+	float conediff = 15.0f;
+	float dist = 50.0f;
 
 	
 
@@ -438,6 +441,11 @@ int main() {
 		ImGui::ColorPicker3("Light Color", glm::value_ptr(lightcolor));
 		ImGui::SliderFloat("Specular", &speclight, 0.0f, 512.0f);
 		ImGui::SliderFloat("Brightness", &brightness, 0.0f, 1.0f);
+		ImGui::SliderFloat("Strength", &dist, 0.0f, 50.0f);
+		ImGui::SliderFloat("Light Cone Size", &coneangle, 0.0f, 30.0f);
+		ImGui::SliderFloat("Light Cone Diff", &conediff, 0.0f, 30.0f);
+
+
 		ImGui::End();
 
 
@@ -506,15 +514,18 @@ int main() {
 		//setting light struct
 
 		
-		//shader.setVec3("light.position", lightPosition);
+		shader.setVec3("light.position", cameraPosition);
 
-		shader.setVec3("light.direction", glm::vec3(0.0f, -1.0f, 0.0f));
+		shader.setVec3("light.direction", cameraForward);
 
 		shader.setVec3("light.ambient", glm::vec3(brightness/6)*lightcolor);
 		shader.setVec3("light.diffuse", glm::vec3(brightness)*lightcolor);
 		shader.setVec3("light.specular", glm::vec3(1.0f)*lightcolor);
 
+		shader.setFloat("light.innerconeangle", cos(glm::radians(coneangle)));
+		shader.setFloat("light.outerconeangle", cos(glm::radians(coneangle + conediff)));
 
+		shader.setFloat("light.distance", dist);
 
 		//view projections & world space stuff
 		glUniformMatrix4fv(glGetUniformLocation(shader.getID(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
