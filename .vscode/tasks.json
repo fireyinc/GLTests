@@ -9,15 +9,15 @@
                 "-std=c++20",
                 "-I${workspaceFolder}/include",
                 "-L${workspaceFolder}/lib",
-                "${workspaceFolder}/src/*.cpp",
-                "${workspaceFolder}/src/libraries/*.cpp",
-                "${workspaceFolder}/src/libraries/imgui/*.cpp",
+                "${workspaceFolder}/src/\\*.cpp",
+                "${workspaceFolder}/src/libraries/\\*.cpp",
+                "${workspaceFolder}/src/libraries/imgui/\\*.cpp",
                 "${workspaceFolder}/src/libraries/glad.c",
                 "${workspaceFolder}/include/glad/glad.h",
 
-                "-lglfw",
+                "-lglfw3dll",
                 "-o",
-                "${workspaceFolder}/src/app.prg"
+                "${workspaceFolder}/app.exe"
             ],
             "options": {
                 "cwd": "${fileDirname}"

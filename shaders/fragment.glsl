@@ -65,7 +65,7 @@ in vec3 camPosition;
 
 
 uniform Material mat;
-uniform PointLight light;
+uniform SpotLight light;
 // uniform PointLight light2;
 
 
